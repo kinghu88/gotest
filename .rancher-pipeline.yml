@@ -3,7 +3,7 @@ stages:
   steps:
   - runScriptConfig:
       image: golang:latest
-      shellScript: "ls \nmkdir /app\ncd /app\ngo build -o test  test.go"
+      shellScript: "ls \ngo build -o test  test.go"
 - name: dockerfile
   steps:
   - publishImageConfig:
