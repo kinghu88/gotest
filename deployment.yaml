@@ -1,0 +1,38 @@
+apiVersion: v1                 #API的版本号，版本号可以用 kubectl api-versions 查询到
+kind: Service                  #表明资源对象，例如Pod、RC、Service、Namespace及Node等
+metadata:                      #资源对象的元数据定义
+  name: gotest                 #service名称
+spec:                          #资源对象的详细定义，持久化到etcd中保存
+  selector:                    #label选择器，管理label对应的pod
+    app: gotest                #deploy的label_name
+  type: ClusterIP              #Service类型，ClusterIP和NodePort、LB
+  ports:                       #暴露的端口列表
+    - protocol: TCP            #协议，支持TCP、UDP，默认TCP
+      port: 80                 #Service监听的端口，对应ClusterIP，即ClusterIP+ServicePort供集群内部pod访问的
+      targetPort: 80           #对应pod中容器的端口
+      name: http
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotest
+  labels:
+    app: gotest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gotest
+  template:
+    metadata:
+      labels:
+        app: gotest
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: gotest
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 80
