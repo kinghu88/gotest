@@ -1,5 +1,4 @@
 {
-  "extends": [
-    "config:base"
-  ]
+"dependencyDashboardTitle": "依赖更新",
+"pre-commit": {"enabled": true}
 }
