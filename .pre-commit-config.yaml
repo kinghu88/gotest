@@ -1,0 +1,44 @@
+repos:
+  - repo: local
+    hooks:
+    - id: check-test-data
+      name: check test json data ids and columns match
+      language: system
+      entry: ./scripts/check.sh
+      pass_filenames: false
+    - id: python-no-print
+      name: check for print()
+      description: 'A quick check for the `print()` built-in function'
+      entry: '\bprint\('
+      language: pygrep
+      types: [python]
+      exclude: ^scripts/
+  - repo: https://hub.fastgit.org/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: pretty-format-json
+        args: ["--autofix", "--no-sort-keys", "--no-ensure-ascii", "--indent", "2"]
+  - repo: https://hub.fastgit.org/psf/black
+    rev: 21.9b0
+    hooks:
+      - id: black
+  - repo: https://hub.fastgit.org/pre-commit/mirrors-mypy
+    rev: v0.910-1
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-all]
+  - repo: https://hub.fastgit.org/pycqa/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+  - repo: https://hub.fastgit.org/pycqa/isort
+    rev: 5.9.3
+    hooks:
+      - id: isort
