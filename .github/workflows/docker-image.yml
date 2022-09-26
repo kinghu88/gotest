@@ -5,13 +5,13 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  docker-build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag kinghu88/gotest:latest
-  docker-push:
+#   docker-build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Build the Docker image
+#       run: docker build . --file Dockerfile --tag kinghu88/gotest:latest
+  docker-build-push:
     runs-on: ubuntu-latest
     steps:
       -
