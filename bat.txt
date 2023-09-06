@@ -1,0 +1,14 @@
+@echo on
+setlocal
+
+set "mysql_path=C:\path\to\mysql.exe"
+set "database_name=your_database_name"
+set "tml_directory=C:\path\to\tml"
+
+for %%f in ("%tml_directory%\*.sql") do (
+    echo Importing %%~nxf into %database_name%
+    %mysql_path% -u username -p password %database_name% < "%%f"
+)
+
+endlocal
+pause
